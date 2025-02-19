@@ -1,0 +1,4 @@
+.env
+node_modules
+logs/invalid_requests.log
+src/db/careers.db
