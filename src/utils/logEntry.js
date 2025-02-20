@@ -1,23 +1,13 @@
 const fs = require('fs');
-const path = require('path');
 
 const logEntry = (message) => {
     const timestamp = new Date().toISOString();
     const logMessage = `${timestamp} - ${message}\n`;
-    const logDir = path.join(__dirname, 'logs');
-    const logFilePath = path.join(logDir, 'invalid_requests.log');
-
-    fs.mkdir(logDir, { recursive: true }, (err) => {
+    
+    fs.appendFile('./logs/invalid_requests.log', logMessage, (err) => {
         if (err) {
-            console.error('Error creating log directory:', err);
-            return;
+            console.error('Error writing to log file:', err);
         }
-
-        fs.appendFile(logFilePath, logMessage, (err) => {
-            if (err) {
-                console.error('Error writing to log file:', err);
-            }
-        });
     });
 }
 
