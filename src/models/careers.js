@@ -3,7 +3,7 @@ const db = require('../db/db');
 class CareerModel {
     static getAll() {
         return new Promise((resolve, reject) => {
-            db.all("SELECT * FROM careers", [], (err, rows) => {
+            db.all("SELECT id, title, location FROM careers", [], (err, rows) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -15,7 +15,7 @@ class CareerModel {
 
     static getById(id) {
         return new Promise((resolve, reject) => {
-            const sql = `SELECT * FROM careers WHERE id = ?`;
+            const sql = `SELECT id, title, location, employment_type, description FROM careers WHERE id = ?`;
             const values = [id];
 
             db.get(sql, values, (err, row) => {
