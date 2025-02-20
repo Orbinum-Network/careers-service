@@ -19,7 +19,7 @@ const validateRequest = (req, res, next) => {
             logEntry(`Invalid Origin: ${origin}, DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
             res.status(403).send('Forbidden');
         }
-    } else if (ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1' || ip === HOST_IP) {
+    } else if (dockerIp === '127.0.0.1' || dockerIp === '::1' || dockerIp === '::ffff:127.0.0.1' || dockerIp === HOST_IP) {
         next();
     } else {
         logEntry(`Not Local: DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
