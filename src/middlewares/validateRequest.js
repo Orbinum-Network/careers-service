@@ -1,5 +1,5 @@
 const { CORS_ORIGINS, HOST_IP } = require('../config/envs');
-const logEntry = require('../utils/logEntry');
+const invalidRequestLogger = require('../utils/invalidRequestLogger');
 
 const allowedOrigins = (CORS_ORIGINS || '').split(',').map(origin => origin.trim());
 
@@ -16,13 +16,13 @@ const validateRequest = (req, res, next) => {
         if (allowedOrigins.includes(origin)) {
             next();
         } else {
-            logEntry(`Invalid Origin: ${origin}, DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
+            invalidRequestLogger(`Invalid Origin: ${origin}, DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
             res.status(403).send('Forbidden');
         }
     } else if (dockerIp === '127.0.0.1' || dockerIp === '::1' || dockerIp === '::ffff:127.0.0.1' || dockerIp === HOST_IP) {
         next();
     } else {
-        logEntry(`Not Local: DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
+        invalidRequestLogger(`Not Local: DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
         res.status(403).send('Forbidden');
     }
 };
