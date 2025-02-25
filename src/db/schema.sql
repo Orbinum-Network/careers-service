@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS careers (
     employment_type TEXT CHECK(employment_type in ('Full Time', 'Part Time', 'Freelance')),
     department VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
+    requirements TEXT NOT NULL DEFAULT '[]',
     state TEXT CHECK(state in ('FINISHED', 'CANCELLED', 'ACTIVE')),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
