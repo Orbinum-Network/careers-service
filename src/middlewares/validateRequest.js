@@ -10,13 +10,15 @@ const validateRequest = (req, res, next) => {
     const dockerIp = req.ip || req.connection.remoteAddress;
 
     // Get the 'X-Forwarded-For' header, which contains the real client IP and the Cloudflare proxy IP.
-    const clientIp = req.headers['x-forwarded-for'];
+    const clientIps = req.headers['x-forwarded-for'];
+
+    req.clientIpAddress = clientIps ? clientIps.split(',')[0].trim() : req.socket.remoteAddress;
 
     if (origin) {
         if (allowedOrigins.includes(origin)) {
             next();
         } else {
-            invalidRequestLogger(`Invalid Origin: ${origin}, DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
+            invalidRequestLogger(`Invalid Origin: ${origin}, DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIps.split(',')}`);
             res.status(403).send('Forbidden');
         }
     } else if (dockerIp === '127.0.0.1' || dockerIp === '::1' || dockerIp === '::ffff:127.0.0.1' || dockerIp === HOST_IP) {
