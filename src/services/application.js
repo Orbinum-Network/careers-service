@@ -1,6 +1,7 @@
 const { EMAIL_USER } = require('../config/envs');
 const appyLogger = require('../utils/appyLogger');
 const transporter = require('../utils/transporter');
+const ApplicationModel = require('../models/applications.js');
 
 const sendApplicationEmail = async ({ name, email, linkedIn, website, github, resume }) => {
     try {
@@ -26,4 +27,13 @@ const sendApplicationEmail = async ({ name, email, linkedIn, website, github, re
     }
 };
 
-module.exports = { sendApplicationEmail };
+const registerClientApplication = async (clientIpAddress, career_id) => {
+    try {
+        const application = await ApplicationModel.create(clientIpAddress, career_id);
+        return application;
+    } catch (error) {
+        throw new Error(`Error creating application: ${error.message}`);
+    }
+}
+
+module.exports = { sendApplicationEmail, registerClientApplication };
