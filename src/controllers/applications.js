@@ -13,7 +13,7 @@ const receiveApplication = async (req, res) => {
         const clientIpAddress = req.clientIpAddress;
 
         const result = await applicationService.getApplicationByUserIp(clientIpAddress, career_id);
-        if (result.length > 0) {
+        if (result) {
             return res.status(200).json({
                 success: true,
                 message: "You have already applied before and cannot apply again.",
