@@ -24,7 +24,7 @@ const validateRequest = (req, res, next) => {
     } else if (dockerIp === '127.0.0.1' || dockerIp === '::1' || dockerIp === '::ffff:127.0.0.1' || dockerIp === HOST_IP) {
         next();
     } else {
-        invalidRequestLogger(`Not Local: DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${clientIp}`);
+        invalidRequestLogger(`Not Local: DOCKERIZED IP: ${dockerIp}, CLIENT IP: ${req.clientIpAddress}`);
         res.status(403).send('Forbidden');
     }
 };
