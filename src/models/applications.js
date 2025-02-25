@@ -13,7 +13,7 @@ class ApplicationModel {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve({ career_id, user_ip });
+                    resolve({ career_id, clientIpAddress });
                 }
             });
         })
