@@ -7,12 +7,12 @@ const applicationController = require('../controllers/applications');
 
 const upload = multer();
 
+router.post('/apply', upload.single("resume"), applicationController.receiveApplication);
+router.get('/applications', applicationController.getAllApplications);
 router.get('/', careerController.getAllCareers);
 router.get('/:id', careerController.getCareerById);
 router.post('/', careerValidationRules, careerController.createCareer);
 router.put('/:id', careerValidationRules, careerController.updateCareer);
 router.delete('/:id', careerController.deleteCareer);
-router.post('/apply', upload.single("resume"), applicationController.receiveApplication);
-router.get('/applications', applicationController.getAllApplications);
 
 module.exports = router;
